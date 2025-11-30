@@ -99,10 +99,6 @@ Acesse em: `http://127.0.0.1:5000`
 
 O dashboard oferece visualização em tempo real com as seguintes funcionalidades:
 
-#### Capturas de Tela
-
-![Dashboard EstruturaIAGen - Dark Mode Profissional](https://github.com/ivonsmatos/EstruturaIAGen/assets/print-dashboard.png)
-
 **Descrição da Interface:**
 
 O painel exibe uma arquitetura visual moderna com:
