@@ -6,10 +6,9 @@ v1.4.0 - P1.3 Cache Implementation
 
 import time
 import logging
-from functools import lru_cache, wraps
-from typing import Any, Callable, Optional, Dict
+from typing import Any, Optional, Dict
 from collections import OrderedDict
-from datetime import datetime, timedelta
+from datetime import datetime
 import os
 import json
 
@@ -205,6 +204,8 @@ class CacheManager:
         return len(expired_keys)
 
 
+
+
 # ============================================================================
 # INSTÂNCIA GLOBAL
 # ============================================================================
@@ -227,3 +228,92 @@ def clear_cache():
 def get_cache_stats() -> Dict[str, Any]:
     """Retorna estatísticas do cache"""
     return cache_manager.get_stats()
+
+
+# ============================================================================
+# DASHBOARD-SPECIFIC CACHE FUNCTIONS (sem decorator para evitar ciclo)
+# ============================================================================
+
+def get_dashboard_metrics(periodo: str = "24h", user_id: int = 1):
+    """
+    Fetch e cache de métricas do dashboard
+    
+    Args:
+        periodo: Período (24h, 7d, 30d, all)
+        user_id: ID do usuário
+        
+    Returns:
+        Métricas agregadas (cacheadas por 5 minutos)
+    """
+    cache_key = f"dashboard_metrics:{periodo}:{user_id}"
+    cached_result = cache_manager.get(cache_key)
+    
+    if cached_result:
+        logger.debug(f"✓ Retornando métricas do cache: {periodo}")
+        return cached_result
+    
+    logger.info(f"🔄 Fetchando métricas (não estava em cache): {periodo}")
+    try:
+        from app.db.metrics import fetch_metrics_from_db
+        result = fetch_metrics_from_db(periodo, user_id)
+        cache_manager.set(cache_key, result, ttl=300)  # 5 minutos
+        return result
+    except ImportError:
+        logger.warning("app.db.metrics não disponível")
+        return {}
+
+
+def get_dashboard_stats(periodo: str = "24h", user_id: int = 1):
+    """
+    Estatísticas consolidadas do dashboard
+    
+    Args:
+        periodo: Período para análise
+        user_id: ID do usuário
+        
+    Returns:
+        Estatísticas (cacheadas por 10 minutos)
+    """
+    cache_key = f"dashboard_stats:{periodo}:{user_id}"
+    cached_result = cache_manager.get(cache_key)
+    
+    if cached_result:
+        logger.debug(f"✓ Retornando stats do cache: {periodo}")
+        return cached_result
+    
+    logger.info(f"🔄 Calculando estatísticas (não estava em cache): {periodo}")
+    try:
+        from app.db.metrics import get_metric_stats
+        result = get_metric_stats(user_id, periodo)
+        cache_manager.set(cache_key, result, ttl=600)  # 10 minutos
+        return result
+    except ImportError:
+        logger.warning("app.db.metrics não disponível")
+        return {}
+
+
+def get_chart_config(chart_type: str = "efficiency"):
+    """
+    Configuração de gráfico cacheada
+    
+    Args:
+        chart_type: Tipo de gráfico
+        
+    Returns:
+        Configuração do Plotly
+    """
+    cache_key = f"chart_config:{chart_type}"
+    cached_result = cache_manager.get(cache_key)
+    
+    if cached_result:
+        logger.debug(f"✓ Retornando config do cache: {chart_type}")
+        return cached_result
+    
+    configs = {
+        "efficiency": {"title": "Eficiência", "type": "bar"},
+        "tokens": {"title": "Tokens", "type": "line"},
+        "latency": {"title": "Latência", "type": "scatter"}
+    }
+    result = configs.get(chart_type, configs["efficiency"])
+    cache_manager.set(cache_key, result, ttl=60)  # 1 minuto
+    return result
