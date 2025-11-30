@@ -129,10 +129,6 @@ Os resultados dos testes serão exibidos no terminal, incluindo métricas como t
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
 
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
 ## Atualizações Recentes
 
 ### Reorganização do Projeto
@@ -152,3 +148,7 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 - `flask-cors`: Adicionado para suporte a CORS.
 - `pandas`: Utilizado para manipulação de dados no Dash.
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
