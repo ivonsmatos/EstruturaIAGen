@@ -146,3 +146,14 @@
 2025-11-30 15:09:38,279 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:09:38] "POST /_dash-update-component HTTP/1.1" 200 -
 2025-11-30 15:09:38,280 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:09:38] "POST /_dash-update-component HTTP/1.1" 200 -
 2025-11-30 15:09:38,281 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:09:38] "POST /_dash-update-component HTTP/1.1" 200 -
+2025-11-30 15:43:42,759 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:42] "GET / HTTP/1.1" 200 -
+2025-11-30 15:43:42,882 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:42] "[36mGET /assets/style.css?m=1764516174.4473815 HTTP/1.1[0m" 304 -
+2025-11-30 15:43:43,371 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:43] "GET /_dash-layout HTTP/1.1" 200 -
+2025-11-30 15:43:43,373 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:43] "GET /_dash-dependencies HTTP/1.1" 200 -
+2025-11-30 15:43:43,374 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:43] "GET /_favicon.ico?v=3.3.0 HTTP/1.1" 200 -
+2025-11-30 15:43:43,402 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:43] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2025-11-30 15:43:43,404 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:43] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2025-11-30 15:43:43,415 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:43] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2025-11-30 15:43:43,418 - dashboard_profissional - INFO - Executando callback: update_dashboard
+2025-11-30 15:43:43,469 - dashboard_profissional - INFO - Callback update_dashboard completado com sucesso
+2025-11-30 15:43:43,479 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:43:43] "POST /_dash-update-component HTTP/1.1" 200 -
