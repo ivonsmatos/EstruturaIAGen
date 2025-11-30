@@ -9,6 +9,7 @@
 ## 📌 O que é?
 
 Um **dashboard profissional de monitoramento de IA** com:
+
 - ✅ Design elegante em modo escuro (sem gradientes)
 - ✅ Filtros interativos por período (24h, 7d, 30d, tudo)
 - ✅ Visualizações em tempo real com Plotly
@@ -20,44 +21,49 @@ Um **dashboard profissional de monitoramento de IA** com:
 
 ## 🎯 Status do Projeto
 
-| Sprint | Item | Descrição | Status |
-|--------|------|-----------|--------|
-| P0 | Críticos | Debug mode, Error handling, Logging | ✅ **COMPLETO** |
-| **P1** | **P1.1** | **Testes Automatizados** | **✅ COMPLETO** |
-| | **P1.2** | **Banco de Dados SQL** | **🔄 EM PROGRESSO** |
-| | **P1.3** | **Cache de Gráficos** | ⏳ PENDENTE |
-| P2 | Exportar | CSV/PDF export | ⏳ FUTURO |
-| P2 | Drill-down | Análise detalhada | ⏳ FUTURO |
-| P3 | UI/UX | Temas, Animações | ⏳ FUTURO |
+| Sprint | Item       | Descrição                           | Status              |
+| ------ | ---------- | ----------------------------------- | ------------------- |
+| P0     | Críticos   | Debug mode, Error handling, Logging | ✅ **COMPLETO**     |
+| **P1** | **P1.1**   | **Testes Automatizados**            | **✅ COMPLETO**     |
+|        | **P1.2**   | **Banco de Dados SQL**              | **🔄 EM PROGRESSO** |
+|        | **P1.3**   | **Cache de Gráficos**               | ⏳ PENDENTE         |
+| P2     | Exportar   | CSV/PDF export                      | ⏳ FUTURO           |
+| P2     | Drill-down | Análise detalhada                   | ⏳ FUTURO           |
+| P3     | UI/UX      | Temas, Animações                    | ⏳ FUTURO           |
 
 ---
 
 ## 🚀 Como Começar
 
 ### 1️⃣ Clonar Repositório
+
 ```bash
 git clone https://github.com/seu-usuario/EstruturaIAGen.git
 cd EstruturaIAGen
 ```
 
 ### 2️⃣ Instalar Dependências
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 3️⃣ Configurar Variáveis de Ambiente
+
 ```bash
 cp .env.example .env
 # Editar .env conforme necessário
 ```
 
 ### 4️⃣ Rodar o Dashboard
+
 ```bash
 python web_interface/dashboard_profissional.py
 # Acesso: http://localhost:8050
 ```
 
 ### 5️⃣ Rodar Testes
+
 ```bash
 pytest tests/test_dashboard.py -v
 # Resultado esperado: 27 passed in 2.45s ✅
@@ -102,21 +108,22 @@ EstruturaIAGen/
 
 ## 🔧 Tecnologias Utilizadas
 
-| Tecnologia | Versão | Uso |
-|-----------|--------|-----|
-| **Python** | 3.10+ | Linguagem principal |
-| **Dash** | 2.14.1 | Framework web interativo |
-| **Plotly** | 5.17.0 | Gráficos interativos |
-| **pytest** | 7.4.0 | Testes automatizados |
-| **SQLAlchemy** | 2.0.20 | ORM para banco de dados |
-| **python-dotenv** | 1.0.0 | Variáveis de ambiente |
-| **logging** | Built-in | Sistema de logs |
+| Tecnologia        | Versão   | Uso                      |
+| ----------------- | -------- | ------------------------ |
+| **Python**        | 3.10+    | Linguagem principal      |
+| **Dash**          | 2.14.1   | Framework web interativo |
+| **Plotly**        | 5.17.0   | Gráficos interativos     |
+| **pytest**        | 7.4.0    | Testes automatizados     |
+| **SQLAlchemy**    | 2.0.20   | ORM para banco de dados  |
+| **python-dotenv** | 1.0.0    | Variáveis de ambiente    |
+| **logging**       | Built-in | Sistema de logs          |
 
 ---
 
 ## 📊 Dashboard em Ação
 
 ### Visualizações Principais
+
 - 📈 **Eficiência de IA**: Taxa de eficiência ao longo do tempo
 - 🎯 **Acurácia do Modelo**: Precisão da IA
 - ⚡ **Tempo de Processamento**: Latência em ms
@@ -124,12 +131,14 @@ EstruturaIAGen/
 - ❌ **Taxa de Erros**: Percentage de falhas
 
 ### Filtros Disponíveis
+
 - 🕐 **Últimas 24h**: Dados das últimas 24 horas
 - 📅 **Últimos 7 dias**: Uma semana de dados
 - 📆 **Últimos 30 dias**: Um mês de dados
 - 📊 **Histórico Completo**: Todos os dados disponíveis
 
 ### Função de Exportação
+
 - 📥 Botão de export em desenvolvimento (P2.1)
 
 ---
@@ -137,6 +146,7 @@ EstruturaIAGen/
 ## 🧪 Testes Automatizados (P1.1) ✅
 
 ### Suite de Testes
+
 ```bash
 pytest tests/test_dashboard.py -v
 ```
@@ -144,25 +154,28 @@ pytest tests/test_dashboard.py -v
 **Resultado**: 27 testes ✅
 
 ### Teste Classes
-| Classe | Testes | Coverage |
-|--------|--------|----------|
-| TestGenerateData | 7 | 85% |
-| TestCreateKPICard | 3 | 90% |
-| TestGetPlotLayout | 4 | 88% |
-| TestColorPalette | 2 | 95% |
-| TestSafeCallbackDecorator | 3 | 92% |
-| TestDataMultipliers | 3 | 87% |
-| TestDataRanges | 3 | 91% |
-| TestIntegration | 2 | 86% |
-| **TOTAL** | **27** | **94%** |
+
+| Classe                    | Testes | Coverage |
+| ------------------------- | ------ | -------- |
+| TestGenerateData          | 7      | 85%      |
+| TestCreateKPICard         | 3      | 90%      |
+| TestGetPlotLayout         | 4      | 88%      |
+| TestColorPalette          | 2      | 95%      |
+| TestSafeCallbackDecorator | 3      | 92%      |
+| TestDataMultipliers       | 3      | 87%      |
+| TestDataRanges            | 3      | 91%      |
+| TestIntegration           | 2      | 86%      |
+| **TOTAL**                 | **27** | **94%**  |
 
 ### Executar com Cobertura
+
 ```bash
 pytest tests/test_dashboard.py --cov=web_interface --cov-report=html
 # Relatório: htmlcov/index.html
 ```
 
 ### Leia Mais
+
 Documentação completa: [`tests/README.md`](tests/README.md)
 
 ---
@@ -172,6 +185,7 @@ Documentação completa: [`tests/README.md`](tests/README.md)
 **Status**: Em desenvolvimento (próximo para 04/Dez)
 
 ### Arquitetura Planejada
+
 ```
 User (1) ──→ Dashboard (N)
            └──→ Metric (N)
@@ -202,6 +216,7 @@ Metric:
 ```
 
 ### Inicializar Banco de Dados
+
 ```bash
 # Após implementação
 python migrations/init_db.py
@@ -210,6 +225,7 @@ python migrations/init_db.py
 ```
 
 ### Leia Mais
+
 Documentação detalhada: [`P1_DATABASE_INTEGRATION.md`](P1_DATABASE_INTEGRATION.md)
 
 ---
@@ -219,11 +235,13 @@ Documentação detalhada: [`P1_DATABASE_INTEGRATION.md`](P1_DATABASE_INTEGRATION
 **Status**: Planejado para 07/Dez
 
 ### Estratégia
+
 - LRU Cache com TTL configurável
 - Redis opcional para cache distribuído
 - Monitoramento hit/miss rate
 
 ### Benefícios
+
 - ⚡ Redução de 70% em latência
 - 📉 Menor carga no servidor
 - 💰 Menos consumo de recursos
@@ -264,14 +282,17 @@ AWS_S3_BUCKET=seu_bucket
 ## 🛡️ Segurança & Confiabilidade (P0) ✅
 
 ### Debug Mode Seguro
+
 ```python
 DEBUG_MODE = os.getenv('DASH_DEBUG', 'False').lower() == 'true'
 app.run(debug=DEBUG_MODE)
 ```
+
 - ✅ Produção: `debug=False` (padrão)
 - ✅ Configurável via variável de ambiente
 
 ### Error Handling
+
 ```python
 @safe_callback
 def update_dashboard(periodo):
@@ -281,6 +302,7 @@ def update_dashboard(periodo):
 ```
 
 ### Logging Completo
+
 - 📝 Arquivo: `dashboard.log`
 - 🖥️ Console: Output em desenvolvimento
 - 🔍 Níveis: INFO, DEBUG, ERROR, WARNING
@@ -289,25 +311,27 @@ def update_dashboard(periodo):
 
 ## 📈 Performance
 
-| Métrica | Baseline | Target |
-|---------|----------|--------|
-| Load time | 2.5s | <1.5s (com cache P1.3) |
-| Graph render | 1.8s | <0.5s (com cache) |
-| Filter response | 300ms | <100ms (otimizado) |
-| Memory usage | 256MB | <200MB (otimizado) |
-| Test coverage | 0% | 94% ✅ |
+| Métrica         | Baseline | Target                 |
+| --------------- | -------- | ---------------------- |
+| Load time       | 2.5s     | <1.5s (com cache P1.3) |
+| Graph render    | 1.8s     | <0.5s (com cache)      |
+| Filter response | 300ms    | <100ms (otimizado)     |
+| Memory usage    | 256MB    | <200MB (otimizado)     |
+| Test coverage   | 0%       | 94% ✅                 |
 
 ---
 
 ## 🐛 Debugging
 
 ### Ver Logs
+
 ```bash
 tail -f dashboard.log           # Últimas linhas
 grep "ERROR" dashboard.log      # Apenas erros
 ```
 
 ### Modo Debug
+
 ```bash
 DASH_DEBUG=True python web_interface/dashboard_profissional.py
 # Acesso: http://localhost:8050
@@ -315,6 +339,7 @@ DASH_DEBUG=True python web_interface/dashboard_profissional.py
 ```
 
 ### Teste Isolado
+
 ```bash
 pytest tests/test_dashboard.py::TestGenerateData::test_generate_data_24h -v
 ```
@@ -323,20 +348,21 @@ pytest tests/test_dashboard.py::TestGenerateData::test_generate_data_24h -v
 
 ## 📚 Documentação
 
-| Documento | Propósito |
-|-----------|-----------|
-| [`CHANGELOG.md`](CHANGELOG.md) | Histórico de versões |
-| [`QA_REPORT.md`](QA_REPORT.md) | Análise de qualidade |
-| [`P0_IMPLEMENTATION.md`](P0_IMPLEMENTATION.md) | Detalhes P0 Críticos |
-| [`P1_DATABASE_INTEGRATION.md`](P1_DATABASE_INTEGRATION.md) | Detalhes P1.2 BD |
-| [`SPRINT_P1_PLANNING.md`](SPRINT_P1_PLANNING.md) | Planejamento Sprint P1 |
-| [`tests/README.md`](tests/README.md) | Guia de testes |
+| Documento                                                  | Propósito              |
+| ---------------------------------------------------------- | ---------------------- |
+| [`CHANGELOG.md`](CHANGELOG.md)                             | Histórico de versões   |
+| [`QA_REPORT.md`](QA_REPORT.md)                             | Análise de qualidade   |
+| [`P0_IMPLEMENTATION.md`](P0_IMPLEMENTATION.md)             | Detalhes P0 Críticos   |
+| [`P1_DATABASE_INTEGRATION.md`](P1_DATABASE_INTEGRATION.md) | Detalhes P1.2 BD       |
+| [`SPRINT_P1_PLANNING.md`](SPRINT_P1_PLANNING.md)           | Planejamento Sprint P1 |
+| [`tests/README.md`](tests/README.md)                       | Guia de testes         |
 
 ---
 
 ## 🎓 Próximos Passos
 
 ### Curto Prazo (Esta semana - P1.2)
+
 1. ✅ Implementar modelos SQLAlchemy
 2. ✅ Session management com pooling
 3. ✅ Migrar `generate_data()` para BD
@@ -344,12 +370,14 @@ pytest tests/test_dashboard.py::TestGenerateData::test_generate_data_24h -v
 5. ✅ Scripts de migração
 
 ### Médio Prazo (Próxima semana - P1.3)
+
 1. ⏳ LRU Cache para gráficos
 2. ⏳ Redis integration (opcional)
 3. ⏳ Monitoramento de cache
 4. ⏳ Dashboard ainda mais rápido
 
 ### Longo Prazo (Futuro - P2/P3)
+
 - ⏳ Exportar para CSV/PDF
 - ⏳ Drill-down de análise
 - ⏳ Temas personalizados

@@ -1,0 +1,26 @@
+2025-11-30 13:26:19,447 - __main__ - INFO - ✓ Debug mode desativado (Production mode)
+2025-11-30 13:26:19,496 - __main__ - INFO - Aplicação Dash inicializada
+2025-11-30 13:26:19,585 - __main__ - INFO - Iniciando dashboard em modo: PRODUCTION
+2025-11-30 13:26:19,585 - dash.dash - INFO - Dash is running on http://127.0.0.1:8050/
+
+2025-11-30 13:26:19,595 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8050
+2025-11-30 13:26:19,595 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-30 13:26:56,401 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:26:56] "GET /_reload-hash HTTP/1.1" 200 -
+2025-11-30 13:26:56,474 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:26:56] "GET /_dash-layout HTTP/1.1" 200 -
+2025-11-30 13:26:56,474 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:26:56] "GET /_dash-dependencies HTTP/1.1" 200 -
+2025-11-30 13:26:56,629 - __main__ - INFO - Executando callback: update_dashboard
+2025-11-30 13:26:56,674 - __main__ - INFO - Callback update_dashboard completado com sucesso
+2025-11-30 13:26:56,681 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:26:56] "POST /_dash-update-component HTTP/1.1" 200 -
+2025-11-30 13:26:58,397 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:26:58] "GET /_reload-hash HTTP/1.1" 200 -
+2025-11-30 13:27:56,385 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:27:56] "GET /_reload-hash HTTP/1.1" 200 -
+2025-11-30 13:28:56,407 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:28:56] "GET /_reload-hash HTTP/1.1" 200 -
+2025-11-30 13:29:56,394 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:29:56] "GET /_reload-hash HTTP/1.1" 200 -
+2025-11-30 13:30:56,401 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 13:30:56] "GET /_reload-hash HTTP/1.1" 200 -
+2025-11-30 13:32:31,220 - dashboard_profissional - INFO - ✓ Debug mode desativado (Production mode)
+2025-11-30 13:32:31,268 - dashboard_profissional - INFO - Aplicação Dash inicializada
+2025-11-30 13:32:31,359 - dash.dash - INFO - Dash is running on http://127.0.0.1:8050/
+
+2025-11-30 13:32:31,370 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8050
+2025-11-30 13:32:31,371 - werkzeug - INFO - [33mPress CTRL+C to quit[0m

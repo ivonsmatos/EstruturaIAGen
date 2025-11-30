@@ -9,6 +9,7 @@
 ## Resumo Executivo
 
 Os 3 itens críticos (P0) foram totalmente implementados no dashboard. O sistema agora está:
+
 - ✅ **Seguro para produção** (debug mode OFF)
 - ✅ **Resiliente** (tratamento de erros em todas as funções)
 - ✅ **Observável** (logging completo para debugging)
@@ -18,7 +19,9 @@ Os 3 itens críticos (P0) foram totalmente implementados no dashboard. O sistema
 ## P0.1: Desativar Debug Mode em Produção ✅
 
 ### Problema
+
 O dashboard estava rodando com `app.run(debug=True)`, expondo:
+
 - Stack traces completos ao usuário
 - Reloader automático em cada mudança
 - Console remoto potencialmente acessível
@@ -27,31 +30,37 @@ O dashboard estava rodando com `app.run(debug=True)`, expondo:
 ### Solução Implementada
 
 #### 1. Variável de Ambiente Configurável
+
 ```python
 DEBUG_MODE = os.getenv('DASH_DEBUG', 'False').lower() == 'true'
 ```
 
 **Comportamento**:
+
 - Padrão: `False` (seguro para produção)
 - Pode ser alterado via `.env`: `DASH_DEBUG=true`
 
 #### 2. Arquivo `.env.example`
+
 ```env
 DASH_DEBUG=false  # Produção: false, Desenvolvimento: true
 ```
 
 #### 3. Inicialização Condicional
+
 ```python
 app.run(debug=DEBUG_MODE, host='127.0.0.1', port=8050)
 ```
 
 #### 4. Logging de Status
+
 ```
 ✓ Debug mode desativado (Production mode)  # Produção
 ⚠ Debug mode ativado (Development mode)    # Desenvolvimento
 ```
 
 ### Verificação
+
 ```bash
 # Produção (padrão)
 python dashboard_profissional.py
@@ -67,7 +76,9 @@ DASH_DEBUG=true python dashboard_profissional.py
 ## P0.2: Adicionar Tratamento de Erros em Callbacks ✅
 
 ### Problema
+
 Os callbacks não tinham proteção contra erros:
+
 - Uma exceção não tratada travava o dashboard
 - Usuário recebia erro genérico do browser
 - Nenhuma informação de debugging disponível
@@ -75,6 +86,7 @@ Os callbacks não tinham proteção contra erros:
 ### Solução Implementada
 
 #### 1. Decorator `@safe_callback`
+
 ```python
 def safe_callback(func):
     """Decorator para tratamento de erros em callbacks"""
@@ -94,6 +106,7 @@ def safe_callback(func):
 #### 2. Try/Except em Funções Críticas
 
 **Em `generate_data()`**:
+
 ```python
 try:
     # Validação de período
@@ -107,6 +120,7 @@ except Exception as e:
 ```
 
 **Em `update_dashboard()`**:
+
 ```python
 @safe_callback
 def update_dashboard(selected_periodo):
@@ -120,12 +134,15 @@ def update_dashboard(selected_periodo):
 ```
 
 #### 3. Fallback para Valores Padrão
+
 Em caso de erro:
+
 - KPIs: Lista vazia (renderiza sem conteúdo)
 - Gráficos: Figure vazias (sem dados)
 - Dashboard continua funcional
 
 ### Verificação
+
 ```
 # Teste: Selecionar período inválido
 Input: periodo='invalid'
@@ -142,7 +159,9 @@ Result: Dashboard renderiza com gráficos vazios
 ## P0.3: Adicionar Logging para Debugging ✅
 
 ### Problema
+
 Não havia visibilidade do que o dashboard estava fazendo:
+
 - Erros não eram registrados
 - Impossível debugar problemas em produção
 - Nenhuma auditoria de operações
@@ -150,6 +169,7 @@ Não havia visibilidade do que o dashboard estava fazendo:
 ### Solução Implementada
 
 #### 1. Configuração Completa de Logging
+
 ```python
 logging.basicConfig(
     level=logging.INFO,
@@ -164,16 +184,17 @@ logger = logging.getLogger(__name__)
 
 #### 2. Níveis de Log Utilizados
 
-| Nível | Uso | Exemplo |
-|-------|-----|---------|
-| **DEBUG** | Informações detalhadas de execução | `Gerando dados para período: 24h` |
-| **INFO** | Eventos importantes | `Aplicação Dash inicializada` |
-| **WARNING** | Situações anormais | `Período inválido: invalid` |
-| **ERROR** | Erros com stack trace | `Erro ao gerar dados: ...` |
+| Nível       | Uso                                | Exemplo                           |
+| ----------- | ---------------------------------- | --------------------------------- |
+| **DEBUG**   | Informações detalhadas de execução | `Gerando dados para período: 24h` |
+| **INFO**    | Eventos importantes                | `Aplicação Dash inicializada`     |
+| **WARNING** | Situações anormais                 | `Período inválido: invalid`       |
+| **ERROR**   | Erros com stack trace              | `Erro ao gerar dados: ...`        |
 
 #### 3. Logs em Pontos Críticos
 
 **Inicialização**:
+
 ```
 INFO - Aplicação Dash inicializada
 INFO/WARNING - ✓ Debug mode desativado (Production mode)
@@ -181,6 +202,7 @@ INFO - Iniciando dashboard em modo: PRODUCTION
 ```
 
 **Execução**:
+
 ```
 INFO  - Executando callback: update_dashboard
 DEBUG - Gerando dados para período: 24h
@@ -189,6 +211,7 @@ INFO  - Callback update_dashboard completado com sucesso
 ```
 
 **Erros**:
+
 ```
 WARNING - Período inválido: invalid. Usando padrão '24h'
 ERROR   - Erro no callback update_dashboard: [details]
@@ -196,21 +219,23 @@ ERROR   - Erro no callback update_dashboard: [details]
 ```
 
 #### 4. Arquivo de Log Persistido
+
 - **Localização**: `web_interface/dashboard.log`
 - **Rotação**: Acumula indefinidamente (implementar RotatingFileHandler em P1)
 - **Acesso**: Consultar para troubleshooting pós-incidente
 
 #### 5. Docstrings Expandidas
+
 ```python
 def generate_data(periodo):
     """Gera dados diferentes baseado no período selecionado
-    
+
     Args:
         periodo (str): Período selecionado (24h, 7d, 30d, all)
-    
+
     Returns:
         dict: Dicionário com dados gerados
-        
+
     Raises:
         Exception: Se período não puder ser processado
     """
@@ -219,6 +244,7 @@ def generate_data(periodo):
 ### Verificação
 
 **Arquivo `dashboard.log`**:
+
 ```
 2025-11-30 14:23:15,123 - __main__ - INFO - Aplicação Dash inicializada
 2025-11-30 14:23:15,124 - __main__ - INFO - ✓ Debug mode desativado (Production mode)
@@ -230,6 +256,7 @@ def generate_data(periodo):
 ```
 
 **Console (stdout)**:
+
 ```
 2025-11-30 14:23:15,123 - __main__ - INFO - Aplicação Dash inicializada
 2025-11-30 14:23:15,124 - __main__ - INFO - ✓ Debug mode desativado (Production mode)
@@ -240,20 +267,21 @@ Dash is running on http://127.0.0.1:8050/
 
 ## Comparação: Antes vs Depois
 
-| Aspecto | Antes | Depois |
-|---------|-------|--------|
-| **Debug Mode** | ❌ Sempre ON | ✅ Configurável (OFF padrão) |
-| **Segurança** | ❌ Stack traces expostos | ✅ Erros tratados silenciosamente |
-| **Erro em Callback** | ❌ Dashboard trava | ✅ Fallback com log |
-| **Observabilidade** | ❌ Nenhuma | ✅ Logging completo (console + arquivo) |
-| **Troubleshooting** | ❌ Impossível | ✅ Stack traces em dashboard.log |
-| **Produção Ready** | ❌ Não | ✅ Sim |
+| Aspecto              | Antes                    | Depois                                  |
+| -------------------- | ------------------------ | --------------------------------------- |
+| **Debug Mode**       | ❌ Sempre ON             | ✅ Configurável (OFF padrão)            |
+| **Segurança**        | ❌ Stack traces expostos | ✅ Erros tratados silenciosamente       |
+| **Erro em Callback** | ❌ Dashboard trava       | ✅ Fallback com log                     |
+| **Observabilidade**  | ❌ Nenhuma               | ✅ Logging completo (console + arquivo) |
+| **Troubleshooting**  | ❌ Impossível            | ✅ Stack traces em dashboard.log        |
+| **Produção Ready**   | ❌ Não                   | ✅ Sim                                  |
 
 ---
 
 ## Integração com Ambiente
 
 ### Para Produção
+
 ```bash
 # Padrão (sem .env)
 python web_interface/dashboard_profissional.py
@@ -266,6 +294,7 @@ python web_interface/dashboard_profissional.py
 ```
 
 ### Para Desenvolvimento
+
 ```bash
 # Temporário
 DASH_DEBUG=true python web_interface/dashboard_profissional.py
@@ -282,16 +311,19 @@ python web_interface/dashboard_profissional.py
 ## Próximos Passos (P1, P2, P3)
 
 ### P1 (Altos) - Próxima Sprint
+
 - [ ] Conectar a dados reais (banco de dados)
 - [ ] Adicionar testes automatizados (pytest)
 - [ ] Implementar cache de gráficos (Redis/LRU)
 
 ### P2 (Médios)
+
 - [ ] Adicionar exportação de relatórios (CSV, PDF)
 - [ ] Implementar drill-down nos gráficos
 - [ ] Adicionar suporte a temas (light/dark)
 
 ### P3 (Baixos)
+
 - [ ] Animações nos gráficos
 - [ ] Suporte multilíngue (PT/EN)
 - [ ] Analytics de uso

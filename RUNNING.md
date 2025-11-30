@@ -3,6 +3,7 @@
 ## Configuração Rápida
 
 ### 1. Ativar Virtual Environment
+
 ```bash
 # Windows
 .venv\Scripts\Activate.ps1
@@ -12,6 +13,7 @@ source .venv/bin/activate
 ```
 
 ### 2. Instalar Dependências
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -19,16 +21,19 @@ pip install -r requirements.txt
 ### 3. Executar o Dashboard
 
 **Opção 1: Usando o script de inicialização (Recomendado)**
+
 ```bash
 python run_dashboard.py
 ```
 
 **Opção 2: Direto do diretório raiz**
+
 ```bash
 python -c "import sys; from pathlib import Path; sys.path.insert(0, str(Path('.'))); from web_interface.dashboard_profissional import app; app.run(debug=False, host='127.0.0.1', port=8050)"
 ```
 
 **Opção 3: Do diretório web_interface (após adicionar ao PYTHONPATH)**
+
 ```bash
 cd web_interface
 set PYTHONPATH=..;%PYTHONPATH%
@@ -36,23 +41,27 @@ python dashboard_profissional.py
 ```
 
 ### 4. Acessar o Dashboard
+
 Abra seu navegador em: **http://127.0.0.1:8050**
 
 ## 📊 Features Disponíveis
 
 ### P2.1 - Exportação de Dados
+
 - CSV com formatação e estatísticas
 - PDF com tabelas profissionais (ReportLab)
 - JSON com estrutura hierárquica
 - Botões de download integrados
 
 ### P2.2 - Análise de Drill-down
+
 - Estatísticas descritivas (média, mediana, quartis)
 - Detecção de tendências e anomalias
 - Comparação de métricas com correlação
 - Série temporal agregada
 
 ### P2.3 - Temas Customizáveis
+
 - 5 temas predefinidos (Dark, Light, Cyberpunk, Ocean, Forest)
 - Criação de temas customizados
 - Persistência em JSON
@@ -61,10 +70,13 @@ Abra seu navegador em: **http://127.0.0.1:8050**
 ## 🔧 Troubleshooting
 
 ### Erro: ModuleNotFoundError: No module named 'app'
+
 **Solução**: Rodar sempre do diretório raiz do projeto, ou usar `python run_dashboard.py`
 
 ### Erro: Port 8050 já em uso
+
 **Solução**: Matar processo Python:
+
 ```bash
 # Windows
 taskkill /F /IM python.exe
@@ -74,18 +86,23 @@ killall python
 ```
 
 Depois alterar porta no código:
+
 ```python
 app.run(debug=False, host='127.0.0.1', port=8051)  # outra porta
 ```
 
 ### Warning: ReportLab não instalado
-**Solução**: 
+
+**Solução**:
+
 ```bash
 pip install reportlab==4.0.4
 ```
 
 ### Erro: dcc.Download não funciona
+
 **Solução**: Certifique-se de que está usando Dash >= 2.0:
+
 ```bash
 pip install --upgrade dash
 ```
@@ -141,6 +158,7 @@ EstruturaIAGen/
 ## 📞 Suporte
 
 Para problemas ou dúvidas, verifique:
+
 1. Logs em `dashboard.log`
 2. Console do navegador (F12)
 3. Terminal onde o servidor está rodando

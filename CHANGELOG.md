@@ -38,18 +38,22 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 #### Testes de Cache (18 novos testes)
 
 - **TestCacheManager** (9 testes):
+
   - Set/Get, TTL expiration, invalidate, clear
   - LRU eviction, stats, cleanup, valores complexos
 
 - **TestCachedDecorator** (4 testes):
+
   - Cachear funções, argumentos diferentes
   - Suporte a kwargs, método invalidate_cache
 
 - **TestCachePerformance** (2 testes):
+
   - Hit rate é mais rápido que miss
   - Cálculo correto de hit rate
 
 - **TestCacheEdgeCases** (2 testes):
+
   - Valores grandes, caracteres especiais, acesso concurrent
 
 - **TestCacheMaintenance** (1 teste):

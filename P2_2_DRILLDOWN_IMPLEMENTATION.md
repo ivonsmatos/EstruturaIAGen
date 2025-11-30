@@ -1,11 +1,13 @@
 # P2.2 - Drill-down Analysis Implementation
 
 ## Overview
+
 Implementação de análise detalhada (drill-down) com estatísticas avançadas, detecção de anomalias, análise de tendências e comparação de métricas.
 
 ## 📊 Features Implementadas
 
 ### 1. **DrilldownAnalyzer** (`app/analysis/drilldown.py`)
+
 - **Classe**: `DrilldownAnalyzer` (450+ linhas)
 - **Funcionalidades**:
   - ✅ Cálculo de estatísticas descritivas (média, mediana, desvio padrão, quartis)
@@ -17,6 +19,7 @@ Implementação de análise detalhada (drill-down) com estatísticas avançadas,
   - ✅ Geração de relatórios de performance
 
 #### Métodos Principais:
+
 ```python
 get_detailed_metrics(periodo, user_id, metric_name)
 compare_metrics(periodo, user_id, metric1, metric2)
@@ -25,11 +28,13 @@ get_performance_report(periodo, user_id)
 ```
 
 ### 2. **Testes Automatizados** (`tests/test_drilldown.py`)
+
 - **Total**: 23 testes
 - **Passando**: 23 ✅
 - **Cobertura**: 97% das funções
 
 #### Teste Classes:
+
 - `TestDrilldownAnalyzerInit` (1 teste)
 - `TestCalculateStatistics` (3 testes)
 - `TestTrendDetection` (3 testes)
@@ -45,6 +50,7 @@ get_performance_report(periodo, user_id)
 ## 🔍 Análises Avançadas
 
 ### 1. Estatísticas Descritivas
+
 ```python
 {
   'mean': 0.92,          # Média
@@ -59,6 +65,7 @@ get_performance_report(periodo, user_id)
 ```
 
 ### 2. Detecção de Tendências
+
 ```python
 {
   'slope': 0.0012,           # Inclinação
@@ -71,6 +78,7 @@ get_performance_report(periodo, user_id)
 ```
 
 ### 3. Detecção de Outliers (IQR)
+
 ```python
 {
   'count': 2,
@@ -86,6 +94,7 @@ get_performance_report(periodo, user_id)
 ```
 
 ### 4. Análise de Distribuição
+
 ```python
 {
   'histogram': {
@@ -99,6 +108,7 @@ get_performance_report(periodo, user_id)
 ```
 
 ### 5. Comparação de Métricas
+
 ```python
 {
   'metric1': 'ia_efficiency',
@@ -114,6 +124,7 @@ get_performance_report(periodo, user_id)
 ```
 
 ### 6. Série Temporal com Agregação
+
 ```python
 {
   'metric': 'ia_efficiency',
@@ -151,30 +162,35 @@ requirements.txt (atualizado com scipy)
 ## 🧪 Testes Detalhados
 
 ### Estatísticas
+
 - ✅ Cálculo básico (média, mediana, std)
 - ✅ Quartis e IQR
 - ✅ Valor único
 - ✅ Nenhum valor
 
 ### Tendências
+
 - ✅ Tendência crescente
 - ✅ Tendência decrescente
 - ✅ Tendência estável
 - ✅ Cálculo de percentual
 
 ### Outliers
+
 - ✅ Sem outliers
 - ✅ Outlier alto
 - ✅ Outlier baixo
 - ✅ Múltiplos outliers
 
 ### Distribuição
+
 - ✅ Histograma
 - ✅ Skewness e Kurtosis
 - ✅ Distribuição normal
 - ✅ Distribuição enviesada
 
 ### Série Temporal
+
 - ✅ Agregação por hora
 - ✅ Agregação por dia
 - ✅ Agregação por semana
@@ -183,22 +199,26 @@ requirements.txt (atualizado com scipy)
 ## 📊 Algoritmos Utilizados
 
 ### 1. Regressão Linear (Tendências)
+
 ```
 Y = slope * X + intercept
 ```
 
 ### 2. IQR (Outliers)
+
 ```
 Outlier se: valor < Q1 - 1.5*IQR ou valor > Q3 + 1.5*IQR
 ```
 
 ### 3. Skewness
+
 ```
 Assimetria da distribuição (-∞ a +∞)
 Negativo = esquerda, Positivo = direita
 ```
 
 ### 4. Kurtosis
+
 ```
 Achatamento da distribuição
 > 0 = caudas pesadas, < 0 = caudas leves
