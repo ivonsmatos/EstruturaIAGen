@@ -72,3 +72,45 @@ print(prompt)
 
 3. Experimente os notebooks:
    Abra os arquivos na pasta `notebooks/` usando Jupyter Notebook ou VS Code.
+
+## Funcionalidades Adicionais
+
+### Interface Web
+
+Uma interface web simples foi desenvolvida usando Flask, permitindo interação direta com o modelo.
+
+### API REST
+
+Endpoints foram criados para:
+
+- Geração de texto (`/api/generate`)
+- Análise de respostas (`/api/analyze`)
+- Exportação de logs em CSV e JSON (`/api/export/csv` e `/api/export/json`)
+- Upload de logs para S3 (`/api/upload/s3`)
+
+### Dashboard de Monitoramento
+
+Um dashboard foi implementado usando Dash para visualizar métricas como:
+
+- Tamanho das respostas
+- Timestamps das interações
+
+### Suporte a Múltiplos Modelos
+
+Agora é possível alternar entre diferentes modelos de linguagem via API (`/api/select_model`).
+
+### Treinamento Personalizado
+
+Scripts foram adicionados para pré-processamento de dados e treinamento do modelo com informações específicas.
+
+### Autenticação
+
+Todos os endpoints da API exigem uma chave API para acesso seguro.
+
+### Integração com Serviços de Nuvem
+
+Logs podem ser enviados para um bucket S3 via API.
+
+### Testes de Desempenho
+
+Scripts foram criados para medir o desempenho do modelo em diferentes cenários.
