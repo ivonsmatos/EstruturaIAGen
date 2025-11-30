@@ -1,2 +1,29 @@
-# Dependências do projeto
-# Adicione os pacotes necessários aqui
+# Dependências principais do projeto EstruturaIAGen
+# Dashboard e Visualização
+dash==2.14.1
+plotly==5.17.0
+
+# Backend e API
+flask==3.0.0
+flask-cors==4.0.0
+
+# Ciência de Dados
+numpy==1.24.3
+pandas==2.0.3
+
+# Integração com Cloud
+boto3==1.28.0
+
+# Banco de Dados
+sqlalchemy==2.0.20
+
+# Autenticação
+PyJWT==2.8.0
+
+# Utilidades
+python-dotenv==1.0.0
+requests==2.31.0
+
+# Desenvolvimento e Testes
+pytest==7.4.0
+pytest-cov==4.1.0

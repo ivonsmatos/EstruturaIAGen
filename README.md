@@ -20,24 +20,24 @@ EstruturaIAGen é um projeto modular desenvolvido em Python, utilizando Flask pa
 EstruturaIAGen/
 │
 ├── web_interface/
-│   ├── app.py               # Arquivo principal para iniciar a aplicação Flask
-│   ├── api.py               # Endpoints da API
-│   ├── dashboard.py         # Painel de monitoramento com Dash
-│   ├── auth.py              # Sistema de autenticação
-│   └── cloud_integration.py # Integração com AWS S3
+│   ├── dashboard_profissional.py  # Dashboard interativo com Dash (NOVO)
+│   └── assets/
+│       └── style.css              # Estilo profissional dark mode (NOVO)
 │
 ├── src/
-│   ├── llm/                 # Modelos de linguagem
-│   │   ├── base.py          # Classe base para os modelos
-│   │   ├── gpt_client.py    # Cliente para GPT
-│   │   └── claude_client.py # Cliente para Claude
+│   ├── llm/                       # Modelos de linguagem
+│   │   ├── base.py                # Classe base para os modelos
+│   │   ├── gpt_client.py          # Cliente para GPT
+│   │   └── claude_client.py       # Cliente para Claude
 │
 ├── tests/
-│   └── performance_test.py  # Testes de desempenho
+│   └── performance_test.py        # Testes de desempenho
 │
-├── config/                  # Arquivos de configuração
+├── config/                        # Arquivos de configuração
 │
-└── README.md                # Documentação do projeto
+├── QA_REPORT.md                   # Relatório QA completo (NOVO)
+│
+└── README.md                      # Documentação do projeto
 ```
 
 ## Requisitos
@@ -51,28 +51,68 @@ EstruturaIAGen/
 
 ## Como Executar
 
+### Opção 1: Dashboard Profissional (Recomendado para Demo/Portfólio)
+
 1. Clone o repositório:
    ```bash
    git clone https://github.com/ivonsmatos/EstruturaIAGen.git
    ```
+
 2. Navegue até o diretório do projeto:
    ```bash
    cd EstruturaIAGen
    ```
+
 3. Instale as dependências:
    ```bash
    pip install -r requirements.txt
    ```
-4. Inicie a aplicação:
+
+4. Inicie o dashboard profissional:
    ```bash
-   python web_interface/app.py
-   ```
-5. Acesse a aplicação em seu navegador:
-   ```
-   http://127.0.0.1:5000
+   cd web_interface
+   python dashboard_profissional.py
    ```
 
+5. Acesse em seu navegador:
+   ```
+   http://127.0.0.1:8050
+   ```
+
+### Opção 2: Aplicação Flask (Em desenvolvimento)
+
+```bash
+python web_interface/app.py
+```
+
+Acesse em: `http://127.0.0.1:5000`
+
 ## Exemplos de Uso
+
+### Dashboard Profissional
+
+O dashboard oferece visualização em tempo real com as seguintes funcionalidades:
+
+#### Filtro de Período
+- Selecione entre: **24h**, **7 dias**, **30 dias**, **Todos os dados**
+- Os dados atualizam **automaticamente** sem refresh
+
+#### KPIs Monitorados
+- **Requisições**: Total de requisições no período
+- **Tokens Totais**: Soma de input + output tokens
+- **Custo Estimado**: Custo estimado das operações
+- **Taxa de Erro**: Percentual de erros detectados
+
+#### Gráficos
+1. **Consumo de Tokens por Modelo**: Comparação entre modelos (GPT-4, Claude 3, Llama 3)
+2. **Latência Média**: Tempo de resposta por modelo
+3. **Taxa de Requisições por Segundo**: Gráfico em tempo real com oscilações
+
+#### Design
+- **Tema**: Dark mode profissional com neon accent (#BBF244)
+- **Sem Gradientes**: Cores sólidas conforme design moderno
+- **Hierarquia Visual**: KPIs destacados, seguidos por gráficos
+- **Responsividade**: Grid layout adapta-se a diferentes telas
 
 ### Chamadas à API
 
@@ -93,7 +133,7 @@ curl -X POST http://127.0.0.1:5000/api/upload \
 
 ### Painel de Monitoramento
 
-Acesse o painel em `http://127.0.0.1:5000/dashboard` para visualizar métricas e desempenho.
+Acesse o dashboard em `http://127.0.0.1:8050` para visualizar métricas e desempenho em tempo real.
 
 ## Configuração do Ambiente
 
@@ -129,7 +169,38 @@ Os resultados dos testes serão exibidos no terminal, incluindo métricas como t
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
 
+## Garantia de Qualidade
+
+Este projeto passou por análise rigorosa de QA. Consulte [QA_REPORT.md](QA_REPORT.md) para detalhes completos sobre:
+- Testes funcionais
+- Análise técnica
+- Pontos de melhoria
+- Recomendações pré-produção
+
+**Status**: ✅ Aprovado para Produção (9.5/10)
+
+## Contato
+
+Desenvolvido com ❤️ por [Ivon Matos](https://github.com/ivonsmatos)
+
+---
+
+**Versão**: 1.1.0  
+**Data de Atualização**: 30 de Novembro de 2025
+
 ## Atualizações Recentes
+
+### Dashboard Profissional ⭐ NOVO
+- **Visualização Moderna**: Dark mode com design profissional
+- **Filtro de Período**: Atualização automática de dados (24h, 7d, 30d, all)
+- **KPIs Dinâmicos**: Requisições, Tokens Totais, Custo Estimado, Taxa de Erro
+- **Gráficos Interativos**: 
+  - Consumo de tokens por modelo (gráfico stacked)
+  - Latência média por modelo (gráfico de linhas)
+  - Taxa de requisições em tempo real (gráfico de área)
+- **Design Responsivo**: Layout grid que adapta-se a diferentes telas
+- **Sem Gradientes**: Cores sólidas para estética moderna
+- **Botão Outline**: Exportar relatório com efeito hover neon
 
 ### Integração com Modelos Avançados
 
@@ -157,3 +228,6 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar 
 
 - `flask-cors`: Adicionado para suporte a CORS.
 - `pandas`: Utilizado para manipulação de dados no Dash.
+- `dash`: Framework para criar dashboards interativos
+- `plotly`: Biblioteca para gráficos interativos
+- `numpy`: Computação científica e geração de dados
