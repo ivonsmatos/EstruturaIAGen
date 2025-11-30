@@ -1,10 +1,11 @@
 import dash
-from dash import dcc, html, callback, Input, Output
+from dash import dcc, html, callback, Input, Output, no_update
 import plotly.graph_objects as go
 import numpy as np
 import logging
 import os
 from functools import wraps
+from app.export import export_manager
 
 # ============================================================================
 # LOGGING CONFIGURATION
@@ -176,7 +177,7 @@ app.layout = html.Div(children=[
     
     # Container Principal
     html.Div(className='container', children=[
-        # Header com Filtro e Botão
+        # Header com Filtro e Botões
         html.Div(style={'display': 'flex', 'justifyContent': 'space-between', 'alignItems': 'center', 'marginBottom': '40px'}, children=[
             # Dropdown de Filtro
             html.Div(children=[
@@ -200,11 +201,31 @@ app.layout = html.Div(children=[
                 )
             ], style={'display': 'flex', 'alignItems': 'center'}),
             
-            # Botão Exportar em Outline
-            html.Button(
-                "↓ Exportar Relatório",
-                className='export-button'
-            )
+            # Grupo de Botões de Exportação
+            html.Div(style={'display': 'flex', 'gap': '10px'}, children=[
+                html.Button(
+                    "📊 CSV",
+                    id='btn-export-csv',
+                    className='export-button',
+                    style={'padding': '10px 15px', 'fontSize': '13px'}
+                ),
+                html.Button(
+                    "📄 PDF",
+                    id='btn-export-pdf',
+                    className='export-button',
+                    style={'padding': '10px 15px', 'fontSize': '13px'}
+                ),
+                html.Button(
+                    "📋 JSON",
+                    id='btn-export-json',
+                    className='export-button',
+                    style={'padding': '10px 15px', 'fontSize': '13px'}
+                ),
+                dcc.Download(id='download-dataframe-csv'),
+                dcc.Download(id='download-dataframe-pdf'),
+                dcc.Download(id='download-dataframe-json'),
+                html.Div(id='export-status', style={'marginLeft': '15px', 'color': '#BBF244', 'fontSize': '12px'})
+            ])
         ]),
         
         # KPIs
@@ -288,3 +309,85 @@ def update_dashboard(selected_periodo):
 if __name__ == '__main__':
     logger.info(f"Iniciando dashboard em modo: {'DEBUG' if DEBUG_MODE else 'PRODUCTION'}")
     app.run(debug=DEBUG_MODE, host='127.0.0.1', port=8050)
+
+# ============================================================================
+# CALLBACKS DE EXPORTAÇÃO
+# ============================================================================
+
+@callback(
+    Output('download-dataframe-csv', 'data'),
+    Output('export-status', 'children'),
+    Input('btn-export-csv', 'n_clicks'),
+    Input('periodo-filter', 'value'),
+    prevent_initial_call=True
+)
+@safe_callback
+def export_csv(n_clicks, periodo):
+    """Exporta dados para CSV"""
+    try:
+        if not n_clicks:
+            return no_update, ""
+        
+        logger.info(f"Exportando CSV para período: {periodo}")
+        filepath = export_manager.export_to_csv(periodo, user_id=1)
+        
+        # Ler arquivo para envio
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        return dict(content=content, filename=f"metrics_{periodo}.csv"), "✓ CSV exportado!"
+    except Exception as e:
+        logger.error(f"Erro ao exportar CSV: {str(e)}")
+        return no_update, "✗ Erro na exportação"
+
+
+@callback(
+    Output('download-dataframe-pdf', 'data'),
+    Input('btn-export-pdf', 'n_clicks'),
+    Input('periodo-filter', 'value'),
+    prevent_initial_call=True
+)
+@safe_callback
+def export_pdf(n_clicks, periodo):
+    """Exporta dados para PDF"""
+    try:
+        if not n_clicks:
+            return no_update
+        
+        logger.info(f"Exportando PDF para período: {periodo}")
+        filepath = export_manager.export_to_pdf(periodo, user_id=1)
+        
+        # Retornar path do arquivo
+        return dcc.send_file(filepath, filename=f"metrics_{periodo}.pdf")
+    except ImportError:
+        logger.warning("ReportLab não está instalado")
+        return no_update
+    except Exception as e:
+        logger.error(f"Erro ao exportar PDF: {str(e)}")
+        return no_update
+
+
+@callback(
+    Output('download-dataframe-json', 'data'),
+    Input('btn-export-json', 'n_clicks'),
+    Input('periodo-filter', 'value'),
+    prevent_initial_call=True
+)
+@safe_callback
+def export_json(n_clicks, periodo):
+    """Exporta dados para JSON"""
+    try:
+        if not n_clicks:
+            return no_update
+        
+        logger.info(f"Exportando JSON para período: {periodo}")
+        filepath = export_manager.export_to_json(periodo, user_id=1)
+        
+        # Ler arquivo para envio
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        return dict(content=content, filename=f"metrics_{periodo}.json")
+    except Exception as e:
+        logger.error(f"Erro ao exportar JSON: {str(e)}")
+        return no_update
