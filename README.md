@@ -72,6 +72,59 @@ EstruturaIAGen/
    http://127.0.0.1:5000
    ```
 
+## Exemplos de Uso
+
+### Chamadas à API
+
+#### Exemplo: Geração de Texto
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/generate \
+     -H "Content-Type: application/json" \
+     -d '{"prompt": "Escreva um poema sobre o céu."}'
+```
+
+#### Exemplo: Upload para AWS S3
+
+```bash
+curl -X POST http://127.0.0.1:5000/api/upload \
+     -F "file=@caminho/do/arquivo.txt"
+```
+
+### Painel de Monitoramento
+
+Acesse o painel em `http://127.0.0.1:5000/dashboard` para visualizar métricas e desempenho.
+
+## Configuração do Ambiente
+
+Certifique-se de configurar as seguintes variáveis de ambiente antes de executar a aplicação:
+
+- `AWS_ACCESS_KEY_ID`: Chave de acesso da AWS.
+- `AWS_SECRET_ACCESS_KEY`: Chave secreta da AWS.
+- `AWS_BUCKET_NAME`: Nome do bucket S3.
+
+## Testes
+
+Para executar os testes de desempenho:
+
+```bash
+python tests/performance_test.py
+```
+
+Os resultados dos testes serão exibidos no terminal, incluindo métricas como tempo de resposta e uso de recursos.
+
+## Problemas Conhecidos
+
+- **Erro de Importação**: Certifique-se de que todas as dependências estão instaladas corretamente.
+- **Configuração da AWS**: Verifique se as credenciais da AWS estão configuradas corretamente.
+
+## Recursos Úteis
+
+- [Documentação do Flask](https://flask.palletsprojects.com/)
+- [Documentação do Dash](https://dash.plotly.com/)
+- [Documentação do SQLite](https://www.sqlite.org/docs.html)
+- [Documentação do Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
+
 ## Contribuição
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
