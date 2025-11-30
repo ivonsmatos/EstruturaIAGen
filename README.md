@@ -244,10 +244,6 @@ Os resultados dos testes serão exibidos no terminal, incluindo métricas como t
 - [Documentação do SQLite](https://www.sqlite.org/docs.html)
 - [Documentação do Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
 
-## Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
-
 ## Garantia de Qualidade
 
 Este projeto passou por análise rigorosa de QA. Consulte [QA_REPORT.md](QA_REPORT.md) para detalhes completos sobre:
@@ -258,12 +254,6 @@ Este projeto passou por análise rigorosa de QA. Consulte [QA_REPORT.md](QA_REPO
 - Recomendações pré-produção
 
 **Status**: ✅ Aprovado para Produção (9.5/10)
-
-## Contato
-
-Desenvolvido com ❤️ por [Ivon Matos](https://github.com/ivonsmatos)
-
----
 
 **Versão**: 1.1.0  
 **Data de Atualização**: 30 de Novembro de 2025
@@ -312,3 +302,11 @@ Desenvolvido com ❤️ por [Ivon Matos](https://github.com/ivonsmatos)
 - `dash`: Framework para criar dashboards interativos
 - `plotly`: Biblioteca para gráficos interativos
 - `numpy`: Computação científica e geração de dados
+
+## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
+
+## Contato
+
+Desenvolvido com ❤️ por [Ivon Matos](https://github.com/ivonsmatos)
