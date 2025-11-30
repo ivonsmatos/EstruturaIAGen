@@ -1,10 +1,20 @@
 # Dashboard de Monitoramento usando Dash
-import dash
-from dash import dcc, html
+import sys
+import os
+
+# Adiciona o diretório raiz do projeto ao PYTHONPATH
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../..')
+
+from dash import Dash, dcc, html
 import plotly.express as px
 from web_interface.database import Database
+from flask_cors import CORS
+import pandas as pd
+from web_interface.app import app as flask_app
 
-app = dash.Dash(__name__)
+# Inicializar o Dash
+app = Dash(__name__, url_base_pathname='/dashboard/')
+CORS(app.server)
 
 # Obter dados do banco de dados
 db = Database()
@@ -17,14 +27,18 @@ data = {
     "Timestamp": [log[3] for log in logs]
 }
 
+# Converte os dados em um DataFrame para evitar problemas
+logs_df = pd.DataFrame(data)
+
 # Layout do dashboard
 app.layout = html.Div([
     html.H1("Dashboard de Monitoramento"),
     dcc.Graph(
         id="response-length",
         figure=px.bar(
-            x=data["Prompt"],
-            y=[len(response) for response in data["Response"]],
+            logs_df,
+            x="Prompt",
+            y=logs_df["Response"].apply(len),
             labels={"x": "Prompt", "y": "Tamanho da Resposta"},
             title="Tamanho das Respostas"
         )
@@ -32,8 +46,9 @@ app.layout = html.Div([
     dcc.Graph(
         id="response-timestamp",
         figure=px.scatter(
-            x=data["Timestamp"],
-            y=[len(response) for response in data["Response"]],
+            logs_df,
+            x="Timestamp",
+            y=logs_df["Response"].apply(len),
             labels={"x": "Timestamp", "y": "Tamanho da Resposta"},
             title="Respostas ao Longo do Tempo"
         )

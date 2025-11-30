@@ -132,3 +132,23 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar 
 ## Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
+
+## Atualizações Recentes
+
+### Reorganização do Projeto
+
+- O arquivo `dashboard.py` foi atualizado para ser executado de forma independente.
+- A integração do Dash com o Flask foi ajustada para evitar ciclos de importação.
+
+### Testes Automatizados
+
+- Foram adicionados testes automatizados para validar os endpoints `/` e `/generate`.
+- Os testes podem ser executados com o comando:
+  ```bash
+  pytest tests/test_api.py
+  ```
+
+### Dependências Adicionais
+
+- `flask-cors`: Adicionado para suporte a CORS.
+- `pandas`: Utilizado para manipulação de dados no Dash.
