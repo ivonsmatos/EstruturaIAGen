@@ -23,3 +23,24 @@ class BaseModel:
             str: Resposta gerada pelo modelo.
         """
         raise NotImplementedError("Este método deve ser implementado pelas subclasses.")
+
+class ModelFactory:
+    """Fábrica para criar instâncias de diferentes modelos de linguagem."""
+    @staticmethod
+    def create_model(model_type: str):
+        """Cria uma instância do modelo com base no tipo fornecido.
+
+        Args:
+            model_type (str): Tipo do modelo (ex.: "gpt", "claude").
+
+        Returns:
+            BaseModel: Instância do modelo correspondente.
+        """
+        if model_type == "gpt":
+            from src.llm.gpt_client import GPTClient
+            return GPTClient("GPT")
+        elif model_type == "claude":
+            from src.llm.claude_client import ClaudeClient
+            return ClaudeClient("Claude")
+        else:
+            raise ValueError(f"Modelo desconhecido: {model_type}")
