@@ -1,5 +1,5 @@
 # Dockerfile otimizado para containerização do projeto
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 # Variáveis de ambiente
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -12,4 +12,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "src/main.py"]
+# Atualizar o comando para iniciar o Flask
+CMD ["python", "web_interface/app.py"]

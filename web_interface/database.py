@@ -1,34 +1,41 @@
-# Integração com SQLite
-import sqlite3
+# Integração com PostgreSQL na nuvem
+import psycopg2
 
 class Database:
-    def __init__(self, db_name="data.db"):
-        self.connection = sqlite3.connect(db_name)
+    def __init__(self):
+        self.connection = psycopg2.connect(
+            dbname="cloud_db",
+            user="admin",
+            password="password",
+            host="cloud-db-instance.amazonaws.com",
+            port="5432"
+        )
         self.create_tables()
 
     def create_tables(self):
         with self.connection:
-            self.connection.execute(
+            self.connection.cursor().execute(
                 """
                 CREATE TABLE IF NOT EXISTS logs (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id SERIAL PRIMARY KEY,
                     prompt TEXT,
                     response TEXT,
-                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                    timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
                 )
                 """
             )
 
     def insert_log(self, prompt, response):
         with self.connection:
-            self.connection.execute(
-                "INSERT INTO logs (prompt, response) VALUES (?, ?)",
+            self.connection.cursor().execute(
+                "INSERT INTO logs (prompt, response) VALUES (%s, %s)",
                 (prompt, response)
             )
 
     def fetch_logs(self):
-        with self.connection:
-            return self.connection.execute("SELECT * FROM logs").fetchall()
+        with self.connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM logs")
+            return cursor.fetchall()
 
 # Exemplo de uso
 if __name__ == "__main__":

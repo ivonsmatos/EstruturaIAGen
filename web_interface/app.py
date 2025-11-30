@@ -1,5 +1,5 @@
 # Interface Web usando Flask
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, session
 import sys
 import os
 
@@ -9,6 +9,7 @@ import pandas as pd
 from web_interface.database import Database
 
 app = Flask(__name__)
+app.secret_key = 'supersecretkey'  # Necessário para usar sessões
 
 class ExampleModel(BaseModel):
     def generate(self, prompt: str) -> str:
@@ -26,6 +27,17 @@ def generate():
 @app.route('/')
 def home():
     return "Bem-vindo à aplicação!", 200
+
+# Adicionar suporte para configurações dinâmicas e perfis de usuário
+@app.route('/settings', methods=['POST'])
+def update_settings():
+    data = request.json
+    session['settings'] = data
+    return jsonify({"message": "Configurações atualizadas!"})
+
+@app.route('/profile', methods=['GET'])
+def get_profile():
+    return jsonify({"profile": session.get('profile', {})})
 
 if __name__ == '__main__':
     app.run(debug=True)
