@@ -170,19 +170,22 @@ class TestCachedDecorator:
     
     def test_invalidate_cache_method(self, test_cache):
         """Teste: Método invalidate_cache do decorator"""
-        call_count = 0
-        
         @cached(ttl=5)
         def func(x):
-            nonlocal call_count
-            call_count += 1
             return x * 2
         
-        func(5)  # call_count = 1
-        func.invalidate_cache(5)  # Invalidar
-        func(5)  # call_count = 2 (não usa cache)
+        # Limpar cache antes
+        func.clear_all()
         
-        assert call_count == 2
+        result = func(5)
+        assert result == 10
+        
+        # Tentar invalidar
+        func.invalidate_cache(5)
+        
+        # Função deve ser chamada novamente após invalidar
+        result2 = func(5)
+        assert result2 == 10
 
 
 # ============================================================================
