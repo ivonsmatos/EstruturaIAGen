@@ -125,10 +125,6 @@ Os resultados dos testes serão exibidos no terminal, incluindo métricas como t
 - [Documentação do SQLite](https://www.sqlite.org/docs.html)
 - [Documentação do Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
 
-## Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
-
 ## Atualizações Recentes
 
 ### Integração com Modelos Avançados
@@ -157,3 +153,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar 
 
 - `flask-cors`: Adicionado para suporte a CORS.
 - `pandas`: Utilizado para manipulação de dados no Dash.
+
+- ## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
