@@ -1,5 +1,7 @@
 # EstruturaIAGen
 
+![EstruturaIAGen Dashboard](https://res.cloudinary.com/ivon-matos-analista/image/upload/v1764523413/Dash_AIGen_tzwu39.png)
+
 ## Visão Geral
 
 EstruturaIAGen é um projeto modular desenvolvido em Python, utilizando Flask para a interface web e API, Dash para o painel de monitoramento, SQLite para o banco de dados e integração com AWS S3 para armazenamento em nuvem. O objetivo do projeto é fornecer uma estrutura escalável para aplicações de IA generativa.
