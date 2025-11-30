@@ -2,6 +2,50 @@
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
+## [1.1.1] - 2025-11-30
+
+### ✨ Adicionado - CRÍTICOS (P0) IMPLEMENTADOS
+
+#### Segurança & Produção
+- Debug mode configurável via variável de ambiente `DASH_DEBUG`
+- Padrão: `debug=False` para produção
+- Arquivo `.env.example` com configurações recomendadas
+- Suporte a variáveis de ambiente via `os.getenv()`
+
+#### Logging & Debugging
+- Sistema completo de logging implementado
+- Arquivo `dashboard.log` para persistência
+- Logs em console para desenvolvimento
+- Formato: `timestamp - logger - level - message`
+- Níveis: DEBUG, INFO, WARNING, ERROR
+
+#### Tratamento de Erros
+- Decorator `@safe_callback` para proteção de callbacks
+- Try/except em funções críticas (generate_data, update_dashboard)
+- Fallback para valores padrão em caso de erro
+- Logs detalhados com stack trace (exc_info=True)
+- Validação de períodos inválidos
+
+#### Documentação Técnica
+- Docstrings expandidas em todas as funções
+- Comentários em seções críticas
+- Descrição de argumentos e retorno
+
+### 🔧 Modificado
+
+- `dashboard_profissional.py`: Adicionado logging, error handling, debug control
+- `dashboard_profissional.py`: Restructured com seções claras
+- `QA_REPORT.md`: Marcados P0 como implementados
+- `.env.example`: Criado com configurações de produção
+
+### 📊 Status de Qualidade
+
+- **P0 (Críticos)**: ✅ 3/3 IMPLEMENTADOS
+- **Segurança**: Aprimorada com debug mode configurável
+- **Observabilidade**: Logging completo implementado
+- **Resiliência**: Tratamento de erros em todas as operações críticas
+- **Documentação**: 100% das funções documentadas
+
 ## [1.1.0] - 2025-11-30
 
 ### ✨ Adicionado

@@ -2,6 +2,31 @@ import dash
 from dash import dcc, html, callback, Input, Output
 import plotly.graph_objects as go
 import numpy as np
+import logging
+import os
+from functools import wraps
+
+# ============================================================================
+# LOGGING CONFIGURATION
+# ============================================================================
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('dashboard.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
+# ============================================================================
+# ENVIRONMENT & DEBUG MODE
+# ============================================================================
+DEBUG_MODE = os.getenv('DASH_DEBUG', 'False').lower() == 'true'
+if not DEBUG_MODE:
+    logger.info("✓ Debug mode desativado (Production mode)")
+else:
+    logger.warning("⚠ Debug mode ativado (Development mode)")
 
 # Paleta de Cores
 colors = {
@@ -15,8 +40,27 @@ colors = {
     'border': '#333333'
 }
 
+# ============================================================================
+# ERROR HANDLING DECORATOR
+# ============================================================================
+def safe_callback(func):
+    """Decorator para tratamento de erros em callbacks"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            logger.info(f"Executando callback: {func.__name__}")
+            result = func(*args, **kwargs)
+            logger.info(f"Callback {func.__name__} completado com sucesso")
+            return result
+        except Exception as e:
+            logger.error(f"Erro no callback {func.__name__}: {str(e)}", exc_info=True)
+            # Retorna dados padrão em caso de erro
+            return None
+    return wrapper
+
 # App Dash
 app = dash.Dash(__name__)
+logger.info("Aplicação Dash inicializada")
 
 # Dados Fictícios base
 models = ['GPT-4', 'Claude 3', 'Llama 3']
@@ -43,47 +87,61 @@ def create_kpi_card(title, value, subtext, subtext_color_class):
 
 # Função para gerar dados baseado no período
 def generate_data(periodo):
-    """Gera dados diferentes baseado no período selecionado"""
-    np.random.seed(42)  # Para consistência
+    """Gera dados diferentes baseado no período selecionado
     
-    if periodo == '24h':
-        multiplier = 1.0
-        requisicoes = 1500
-        erro_pct = 1.25
-    elif periodo == '7d':
-        multiplier = 2.5
-        requisicoes = 8000
-        erro_pct = 1.15
-    elif periodo == '30d':
-        multiplier = 4.0
-        requisicoes = 32000
-        erro_pct = 1.10
-    else:  # 'all'
-        multiplier = 6.0
-        requisicoes = 95000
-        erro_pct = 1.05
+    Args:
+        periodo (str): Período selecionado (24h, 7d, 30d, all)
     
-    tokens_in = [int(350 * multiplier), int(200 * multiplier), int(450 * multiplier)]
-    tokens_out = [int(500 * multiplier), int(600 * multiplier), int(400 * multiplier)]
-    latencias = [1.2 / multiplier * 0.5, 0.8 / multiplier * 0.5, 0.4 / multiplier * 0.5]
-    custo = f"${120.50 * multiplier:.2f}"
-    
-    # Gráfico em tempo real
-    x_time = list(range(30))
-    y_reqs = [10 * multiplier + np.random.normal(0, 2) for _ in range(30)]
-    y_reqs = [max(5, r) for r in y_reqs]
-    y_reqs = [y_reqs[i] + (i * 2 * multiplier / 2) for i in range(len(y_reqs))]
-    
-    return {
-        'tokens_in': tokens_in,
-        'tokens_out': tokens_out,
-        'latencias': latencias,
-        'custo': custo,
-        'requisicoes': requisicoes,
-        'erro_pct': erro_pct,
-        'x_time': x_time,
-        'y_reqs': y_reqs
-    }
+    Returns:
+        dict: Dicionário com dados gerados
+    """
+    try:
+        logger.debug(f"Gerando dados para período: {periodo}")
+        np.random.seed(42)  # Para consistência
+        
+        # Mapeamento de períodos
+        periodo_config = {
+            '24h': {'multiplier': 1.0, 'requisicoes': 1500, 'erro_pct': 1.25},
+            '7d': {'multiplier': 2.5, 'requisicoes': 8000, 'erro_pct': 1.15},
+            '30d': {'multiplier': 4.0, 'requisicoes': 32000, 'erro_pct': 1.10},
+            'all': {'multiplier': 6.0, 'requisicoes': 95000, 'erro_pct': 1.05}
+        }
+        
+        if periodo not in periodo_config:
+            logger.warning(f"Período inválido: {periodo}. Usando padrão '24h'")
+            periodo = '24h'
+        
+        config = periodo_config[periodo]
+        multiplier = config['multiplier']
+        requisicoes = config['requisicoes']
+        erro_pct = config['erro_pct']
+        
+        tokens_in = [int(350 * multiplier), int(200 * multiplier), int(450 * multiplier)]
+        tokens_out = [int(500 * multiplier), int(600 * multiplier), int(400 * multiplier)]
+        latencias = [1.2 / multiplier * 0.5, 0.8 / multiplier * 0.5, 0.4 / multiplier * 0.5]
+        custo = f"${120.50 * multiplier:.2f}"
+        
+        # Gráfico em tempo real
+        x_time = list(range(30))
+        y_reqs = [10 * multiplier + np.random.normal(0, 2) for _ in range(30)]
+        y_reqs = [max(5, r) for r in y_reqs]
+        y_reqs = [y_reqs[i] + (i * 2 * multiplier / 2) for i in range(len(y_reqs))]
+        
+        logger.debug(f"Dados gerados com sucesso para período: {periodo}")
+        
+        return {
+            'tokens_in': tokens_in,
+            'tokens_out': tokens_out,
+            'latencias': latencias,
+            'custo': custo,
+            'requisicoes': requisicoes,
+            'erro_pct': erro_pct,
+            'x_time': x_time,
+            'y_reqs': y_reqs
+        }
+    except Exception as e:
+        logger.error(f"Erro ao gerar dados para período {periodo}: {str(e)}", exc_info=True)
+        raise
 
 # Gráficos iniciais (24h)
 initial_data = generate_data('24h')
@@ -174,44 +232,59 @@ app.layout = html.Div(children=[
      Output('graph-tokens', 'figure'),
      Output('graph-latency', 'figure'),
      Output('graph-realtime', 'figure')],
-    Input('periodo-filter', 'value')
+    Input('periodo-filter', 'value'),
+    prevent_initial_call=False
 )
+@safe_callback
 def update_dashboard(selected_periodo):
-    """Atualiza todos os gráficos e KPIs quando o período é alterado"""
-    data = generate_data(selected_periodo)
+    """Atualiza todos os gráficos e KPIs quando o período é alterado
     
-    # KPIs
-    kpi_cards = [
-        create_kpi_card("Requisições", f"{data['requisicoes']:,}", "▲ 12% vs período anterior", 'kpi-subtext-positive'),
-        create_kpi_card("Tokens Totais", f"{(sum(data['tokens_in']) + sum(data['tokens_out'])):,}", "▲ 5% vs média", 'kpi-subtext-positive'),
-        create_kpi_card("Custo Estimado", data['custo'], "● Dentro do budget", 'kpi-subtext-neutral'),
-        create_kpi_card("Taxa de Erro", f"{data['erro_pct']:.2f}%", "▼ 2% melhoria", 'kpi-subtext-positive'),
-    ]
+    Args:
+        selected_periodo (str): Período selecionado
     
-    # Gráfico de Tokens
-    fig_tokens_new = go.Figure(data=[
-        go.Bar(name='Input Tokens', x=models, y=data['tokens_in'], marker_color=colors['accent_orange'], marker_line_width=0),
-        go.Bar(name='Output Tokens', x=models, y=data['tokens_out'], marker_color=colors['neon_main'], marker_line_width=0)
-    ])
-    fig_tokens_new.update_layout(get_plot_layout('Consumo de Tokens por Modelo'), barmode='stack')
-    
-    # Gráfico de Latência
-    fig_latency_new = go.Figure(data=[
-        go.Scatter(x=models, y=data['latencias'], mode='lines+markers',
-                   line=dict(color=colors['neon_main'], width=3, shape='spline'),
-                   marker=dict(size=12, color=colors['bg_body'], line=dict(width=2, color=colors['neon_main'])))
-    ])
-    fig_latency_new.update_layout(get_plot_layout('Latência Média (segundos)'))
-    
-    # Gráfico em Tempo Real
-    fig_realtime_new = go.Figure(data=[
-        go.Scatter(x=data['x_time'], y=data['y_reqs'], fill='tozeroy', mode='lines',
-                   line=dict(color=colors['neon_main'], width=2),
-                   fillcolor=colors['neon_dim'])
-    ])
-    fig_realtime_new.update_layout(get_plot_layout('Taxa de Requisições por Segundo'))
-    
-    return kpi_cards, fig_tokens_new, fig_latency_new, fig_realtime_new
+    Returns:
+        tuple: (KPIs, fig_tokens, fig_latency, fig_realtime)
+    """
+    try:
+        data = generate_data(selected_periodo)
+        
+        # KPIs
+        kpi_cards = [
+            create_kpi_card("Requisições", f"{data['requisicoes']:,}", "▲ 12% vs período anterior", 'kpi-subtext-positive'),
+            create_kpi_card("Tokens Totais", f"{(sum(data['tokens_in']) + sum(data['tokens_out'])):,}", "▲ 5% vs média", 'kpi-subtext-positive'),
+            create_kpi_card("Custo Estimado", data['custo'], "● Dentro do budget", 'kpi-subtext-neutral'),
+            create_kpi_card("Taxa de Erro", f"{data['erro_pct']:.2f}%", "▼ 2% melhoria", 'kpi-subtext-positive'),
+        ]
+        
+        # Gráfico de Tokens
+        fig_tokens_new = go.Figure(data=[
+            go.Bar(name='Input Tokens', x=models, y=data['tokens_in'], marker_color=colors['accent_orange'], marker_line_width=0),
+            go.Bar(name='Output Tokens', x=models, y=data['tokens_out'], marker_color=colors['neon_main'], marker_line_width=0)
+        ])
+        fig_tokens_new.update_layout(get_plot_layout('Consumo de Tokens por Modelo'), barmode='stack')
+        
+        # Gráfico de Latência
+        fig_latency_new = go.Figure(data=[
+            go.Scatter(x=models, y=data['latencias'], mode='lines+markers',
+                       line=dict(color=colors['neon_main'], width=3, shape='spline'),
+                       marker=dict(size=12, color=colors['bg_body'], line=dict(width=2, color=colors['neon_main'])))
+        ])
+        fig_latency_new.update_layout(get_plot_layout('Latência Média (segundos)'))
+        
+        # Gráfico em Tempo Real
+        fig_realtime_new = go.Figure(data=[
+            go.Scatter(x=data['x_time'], y=data['y_reqs'], fill='tozeroy', mode='lines',
+                       line=dict(color=colors['neon_main'], width=2),
+                       fillcolor=colors['neon_dim'])
+        ])
+        fig_realtime_new.update_layout(get_plot_layout('Taxa de Requisições por Segundo'))
+        
+        return kpi_cards, fig_tokens_new, fig_latency_new, fig_realtime_new
+    except Exception as e:
+        logger.error(f"Erro ao atualizar dashboard: {str(e)}", exc_info=True)
+        # Retorna valores padrão em caso de erro
+        return [], go.Figure(), go.Figure(), go.Figure()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    logger.info(f"Iniciando dashboard em modo: {'DEBUG' if DEBUG_MODE else 'PRODUCTION'}")
+    app.run(debug=DEBUG_MODE, host='127.0.0.1', port=8050)
