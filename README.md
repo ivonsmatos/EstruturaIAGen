@@ -129,10 +129,6 @@ Os resultados dos testes serão exibidos no terminal, incluindo métricas como t
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
 
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
 ## Atualizações Recentes
 
 ### Integração com Modelos Avançados
@@ -149,34 +145,15 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 - Dockerfile atualizado para Python 3.10.
 - Suporte para implantação em contêineres.
 
-### Experiência do Usuário
+### Testes Automatizados
 
-- Frontend moderno adicionado com React.
-- Documentação interativa com Swagger.
+- Foram adicionados testes automatizados para validar os endpoints `/` e `/generate`.
+- Os testes podem ser executados com o comando:
+  ```bash
+  pytest tests/test_api.py
+  ```
 
-### Segurança
+### Dependências Adicionais
 
-- Implementação de OAuth2 e JWT para autenticação.
-
-### Funcionalidades Adicionais
-
-- Agendamento de tarefas com Celery.
-- Exportação de dados em CSV/JSON.
-
-### Testes Avançados
-
-- Testes de carga adicionados com Locust.
-
-### Integração com Serviços Externos
-
-- Banco de dados migrado para PostgreSQL na nuvem.
-- Integração com AWS Lambda para tarefas específicas.
-
-### Personalização
-
-- Configurações dinâmicas e perfis de usuário adicionados.
-
-### Treinamento e Recomendações
-
-- Suporte para treinamento de modelos personalizados.
-- Sistema de recomendações baseado em contexto.
+- `flask-cors`: Adicionado para suporte a CORS.
+- `pandas`: Utilizado para manipulação de dados no Dash.
