@@ -1,3 +1,5 @@
+import sys
+from pathlib import Path
 import dash
 from dash import dcc, html, callback, Input, Output, no_update
 import plotly.graph_objects as go
@@ -5,6 +7,10 @@ import numpy as np
 import logging
 import os
 from functools import wraps
+
+# Adicionar diretório raiz ao path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from app.export import export_manager
 
 # ============================================================================
