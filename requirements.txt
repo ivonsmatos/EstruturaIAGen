@@ -2,6 +2,7 @@
 # Dashboard e Visualização
 dash==2.14.1
 plotly==5.17.0
+dash-bootstrap-components==1.5.0
 
 # Backend e API
 flask==3.0.0
