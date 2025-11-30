@@ -1,13 +1,112 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  app:
-    build: .
-    environment:
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - .:/app
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: estruturaiagen-dashboard
     ports:
-      - "8000:8000"
-    command: python src/main.py
+      - "8050:8050"
+    environment:
+      - DASH_DEBUG=False
+      - PYTHONUNBUFFERED=1
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://estrutura_user:estrutura_password@postgres:5432/estruturaiagen_db
+    volumes:
+      - ./web_interface:/app/web_interface
+      - ./app:/app/app
+      - /app/__pycache__
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8050/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - estruturaiagen-net
+    labels:
+      - "com.example.description=EstruturaIAGen Dashboard"
+
+  redis:
+    image: redis:7-alpine
+    container_name: estruturaiagen-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - estruturaiagen-net
+    command: redis-server --appendonly yes
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: estruturaiagen-postgres
+    environment:
+      - POSTGRES_USER=estrutura_user
+      - POSTGRES_PASSWORD=estrutura_password
+      - POSTGRES_DB=estruturaiagen_db
+      - POSTGRES_INITDB_ARGS=-c shared_buffers=256MB -c max_connections=200
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U estrutura_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - estruturaiagen-net
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+volumes:
+  redis-data:
+  postgres-data:
+
+networks:
+  estruturaiagen-net:
+    driver: bridge
+
+# ============================================================================
+# USAGE GUIDE
+# ============================================================================
+# 
+# Development Mode:
+#   docker-compose up -d
+#   Access dashboard: http://localhost:8050
+#
+# View Logs:
+#   docker-compose logs -f dashboard
+#
+# Stop Services:
+#   docker-compose down
+#
+# Clean Up (remove volumes):
+#   docker-compose down -v
+#
+# Rebuild Images:
+#   docker-compose build --no-cache
+#
+# Production Considerations:
+#   - Set DEBUG=False in environment variables
+#   - Use strong passwords for database
+#   - Configure CORS and security headers
+#   - Use external secrets management (AWS Secrets Manager, HashiCorp Vault)
+#   - Enable SSL/TLS with reverse proxy (nginx, traefik)
+#   - Set up monitoring and logging aggregation
+#
