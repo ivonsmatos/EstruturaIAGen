@@ -1,0 +1,6 @@
+# Templates de prompts
+prompts:
+  - id: "exemplo_1"
+    template: "Qual é a capital de {país}?"
+  - id: "exemplo_2"
+    template: "Explique o conceito de {conceito} em termos simples."

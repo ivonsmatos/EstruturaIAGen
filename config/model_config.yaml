@@ -1,0 +1,15 @@
+# Configuração do modelo
+model:
+  name: "modelo_generativo"
+  version: "1.0"
+  parameters:
+    max_tokens: 512
+    temperature: 0.7
+    top_p: 0.9
+
+# Validação
+validate:
+  required_fields:
+    - model.name
+    - model.version
+    - model.parameters.max_tokens
