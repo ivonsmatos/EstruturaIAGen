@@ -116,3 +116,33 @@
 2025-11-30 14:10:51,819 - __main__ - INFO - Executando callback: update_dashboard
 2025-11-30 14:10:51,982 - __main__ - INFO - Callback update_dashboard completado com sucesso
 2025-11-30 14:10:51,992 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 14:10:51] "POST /_dash-update-component HTTP/1.1" 200 -
+2025-11-30 15:07:09,127 - dashboard_profissional - INFO - ✓ Debug mode desativado (Production mode)
+2025-11-30 15:07:09,175 - dashboard_profissional - INFO - Aplicação Dash inicializada
+2025-11-30 15:07:09,265 - dash.dash - INFO - Dash is running on http://127.0.0.1:8050/
+
+2025-11-30 15:07:09,277 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8050
+2025-11-30 15:07:09,278 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-30 15:08:33,112 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "GET / HTTP/1.1" 200 -
+2025-11-30 15:08:33,219 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "[36mGET /assets/style.css?m=1764516174.4473815 HTTP/1.1[0m" 304 -
+2025-11-30 15:08:33,598 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "GET /_dash-layout HTTP/1.1" 200 -
+2025-11-30 15:08:33,600 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "GET /_dash-dependencies HTTP/1.1" 200 -
+2025-11-30 15:08:33,604 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "GET /_favicon.ico?v=3.3.0 HTTP/1.1" 200 -
+2025-11-30 15:08:33,625 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2025-11-30 15:08:33,628 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2025-11-30 15:08:33,639 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2025-11-30 15:08:33,643 - dashboard_profissional - INFO - Executando callback: update_dashboard
+2025-11-30 15:08:33,691 - dashboard_profissional - INFO - Callback update_dashboard completado com sucesso
+2025-11-30 15:08:33,696 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:08:33] "POST /_dash-update-component HTTP/1.1" 200 -
+2025-11-30 15:09:38,230 - dashboard_profissional - INFO - Executando callback: update_dashboard
+2025-11-30 15:09:38,271 - dashboard_profissional - INFO - Callback update_dashboard completado com sucesso
+2025-11-30 15:09:38,276 - dashboard_profissional - INFO - Executando callback: export_pdf
+2025-11-30 15:09:38,276 - dashboard_profissional - INFO - Executando callback: export_csv
+2025-11-30 15:09:38,276 - dashboard_profissional - INFO - Callback export_pdf completado com sucesso
+2025-11-30 15:09:38,277 - dashboard_profissional - INFO - Executando callback: export_json
+2025-11-30 15:09:38,277 - dashboard_profissional - INFO - Callback export_csv completado com sucesso
+2025-11-30 15:09:38,278 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:09:38] "POST /_dash-update-component HTTP/1.1" 200 -
+2025-11-30 15:09:38,278 - dashboard_profissional - INFO - Callback export_json completado com sucesso
+2025-11-30 15:09:38,279 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:09:38] "POST /_dash-update-component HTTP/1.1" 200 -
+2025-11-30 15:09:38,280 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:09:38] "POST /_dash-update-component HTTP/1.1" 200 -
+2025-11-30 15:09:38,281 - werkzeug - INFO - 127.0.0.1 - - [30/Nov/2025 15:09:38] "POST /_dash-update-component HTTP/1.1" 200 -
