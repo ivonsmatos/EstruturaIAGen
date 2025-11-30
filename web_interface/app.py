@@ -1,5 +1,9 @@
 # Interface Web usando Flask
 from flask import Flask, request, jsonify
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from src.llm.base import BaseModel
 
 app = Flask(__name__)
@@ -16,6 +20,10 @@ def generate():
     prompt = data.get('prompt', '')
     response = model.generate(prompt)
     return jsonify({"response": response})
+
+@app.route('/')
+def home():
+    return "Bem-vindo à aplicação!", 200
 
 if __name__ == '__main__':
     app.run(debug=True)
