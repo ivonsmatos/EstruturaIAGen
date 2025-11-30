@@ -258,7 +258,7 @@ Este projeto passou por análise rigorosa de QA. Consulte [QA_REPORT.md](QA_REPO
 
 ## Atualizações Recentes
 
-### Dashboard Profissional ⭐ NOVO
+### Dashboard Profissional
 
 - **Visualização Moderna**: Dark mode com design profissional
 - **Filtro de Período**: Atualização automática de dados (24h, 7d, 30d, all)
@@ -307,4 +307,4 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar 
 
 ## Contato
 
-Desenvolvido com ❤️ por [Ivon Matos](https://github.com/ivonsmatos)
+Desenvolvido por [Ivon Matos](https://github.com/ivonsmatos)
