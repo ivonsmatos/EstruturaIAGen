@@ -54,21 +54,25 @@ EstruturaIAGen/
 ### Opção 1: Dashboard Profissional (Recomendado para Demo/Portfólio)
 
 1. Clone o repositório:
+
    ```bash
    git clone https://github.com/ivonsmatos/EstruturaIAGen.git
    ```
 
 2. Navegue até o diretório do projeto:
+
    ```bash
    cd EstruturaIAGen
    ```
 
 3. Instale as dependências:
+
    ```bash
    pip install -r requirements.txt
    ```
 
 4. Inicie o dashboard profissional:
+
    ```bash
    cd web_interface
    python dashboard_profissional.py
@@ -93,26 +97,105 @@ Acesse em: `http://127.0.0.1:5000`
 
 O dashboard oferece visualização em tempo real com as seguintes funcionalidades:
 
-#### Filtro de Período
+#### Capturas de Tela
+
+![Dashboard EstruturaIAGen - Dark Mode Profissional](https://github.com/ivonsmatos/EstruturaIAGen/assets/print-dashboard.png)
+
+**Descrição da Interface:**
+
+O painel exibe uma arquitetura visual moderna com:
+
+1. **Hero Section** (Topo)
+
+   - Título: "EstruturaIAGen"
+   - Tagline: "Painel de Monitoramento de Performance em Tempo Real"
+   - Design elegante com fundo #1A1F3A
+
+2. **Header com Controles** (Abaixo do Hero)
+
+   - Dropdown de Período: Seleção entre 24h, 7 dias, 30 dias e Todos os dados
+   - Botão "Exportar Relatório": Outline neon com efeito hover
+
+3. **KPI Cards** (Primeira Linha)
+
+   - **Requisições**: Total de requisições processadas (1,500 para 24h)
+   - **Tokens Totais**: Soma de input + output tokens (2,500)
+   - **Custo Estimado**: Estimativa de custo das operações ($120.50)
+   - **Taxa de Erro**: Percentual de erros detectados (1.25%)
+
+   Cada card possui:
+
+   - Número destacado em branco (42px bold)
+   - Subtítulo com indicador de tendência (verde/amarelo)
+   - Fundo escuro (#151B35) com hover suave
+   - Efeito de elevação ao passar o mouse
+
+4. **Gráficos de Performance** (Segunda Linha)
+
+   - **Gráfico 1 - Consumo de Tokens por Modelo**
+
+     - Tipo: Bar chart stacked
+     - Modelos: GPT-4, Claude 3, Llama 3
+     - Cores: Orange (Input) e Neon (#BBF244) para Output
+     - Mostra distribuição de consumo por modelo
+
+   - **Gráfico 2 - Latência Média**
+
+     - Tipo: Line chart com marcadores
+     - Eixo Y: Latência em segundos
+     - Linha neon com marcadores elevados
+     - Comparação entre os 3 modelos
+
+   - **Gráfico 3 - Taxa de Requisições por Segundo** (Full Width)
+     - Tipo: Area chart
+     - Mostra oscilações em tempo real
+     - Tendência de crescimento visível
+     - Preenchimento com gradient neon suave
+
+5. **Design & Acessibilidade**
+   - Tema Dark Mode: #0A0E27 (background), #151B35 (cards)
+   - Neon Accent: #BBF244 (destaque, botões, gráficos)
+   - Sem gradientes: Cores sólidas para estética moderna
+   - Tipografia legível: Fontes Segoe UI/Roboto
+   - Contraste WCAG AA: Texto branco sobre fundo escuro
+   - Responsividade: Grid layout que adapta-se a diferentes telas
+
+#### Funcionalidades Interativas
+
+**Filtro de Período**
+
 - Selecione entre: **24h**, **7 dias**, **30 dias**, **Todos os dados**
 - Os dados atualizam **automaticamente** sem refresh
+- Multiplicadores de dados:
+  | Período | Multiplicador | Requisições | Tokens | Custo |
+  |---------|---------------|------------|--------|--------|
+  | 24h | 1x | 1,500 | 2.5k | $120.50 |
+  | 7d | 2.5x | 8,000 | 6.25k | $301.25 |
+  | 30d | 4x | 32,000 | 10k | $482.00 |
+  | all | 6x | 95,000 | 15k | $723.00 |
 
 #### KPIs Monitorados
+
 - **Requisições**: Total de requisições no período
 - **Tokens Totais**: Soma de input + output tokens
 - **Custo Estimado**: Custo estimado das operações
 - **Taxa de Erro**: Percentual de erros detectados
 
-#### Gráficos
-1. **Consumo de Tokens por Modelo**: Comparação entre modelos (GPT-4, Claude 3, Llama 3)
-2. **Latência Média**: Tempo de resposta por modelo
-3. **Taxa de Requisições por Segundo**: Gráfico em tempo real com oscilações
+#### Gráficos Interativos
 
-#### Design
-- **Tema**: Dark mode profissional com neon accent (#BBF244)
-- **Sem Gradientes**: Cores sólidas conforme design moderno
-- **Hierarquia Visual**: KPIs destacados, seguidos por gráficos
-- **Responsividade**: Grid layout adapta-se a diferentes telas
+1. **Consumo de Tokens por Modelo**: Bar chart stacked comparando input/output entre GPT-4, Claude 3, Llama 3
+2. **Latência Média**: Line chart mostrando tempo de resposta por modelo
+3. **Taxa de Requisições por Segundo**: Area chart em tempo real com oscilações e tendência de crescimento
+
+### Características Técnicas do Dashboard
+
+- **Framework**: Dash (Python) com Plotly para visualizações
+- **Callbacks Reativos**: Atualização automática de dados sem refresh
+- **Dados Dinâmicos**: Multiplicadores de período para simular diferentes cenários
+- **Oscilações Realistas**: Uso de numpy.random.normal() para dados mais orgânicos
+- **Design Responsivo**: Grid layout que adapta-se a diferentes telas
+- **Performance**: Renderização < 2s, callbacks < 500ms
+- **Acessibilidade**: Contraste WCAG AA, tipografia legível
 
 ### Chamadas à API
 
@@ -130,10 +213,6 @@ curl -X POST http://127.0.0.1:5000/api/generate \
 curl -X POST http://127.0.0.1:5000/api/upload \
      -F "file=@caminho/do/arquivo.txt"
 ```
-
-### Painel de Monitoramento
-
-Acesse o dashboard em `http://127.0.0.1:8050` para visualizar métricas e desempenho em tempo real.
 
 ## Configuração do Ambiente
 
@@ -172,6 +251,7 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar 
 ## Garantia de Qualidade
 
 Este projeto passou por análise rigorosa de QA. Consulte [QA_REPORT.md](QA_REPORT.md) para detalhes completos sobre:
+
 - Testes funcionais
 - Análise técnica
 - Pontos de melhoria
@@ -191,10 +271,11 @@ Desenvolvido com ❤️ por [Ivon Matos](https://github.com/ivonsmatos)
 ## Atualizações Recentes
 
 ### Dashboard Profissional ⭐ NOVO
+
 - **Visualização Moderna**: Dark mode com design profissional
 - **Filtro de Período**: Atualização automática de dados (24h, 7d, 30d, all)
 - **KPIs Dinâmicos**: Requisições, Tokens Totais, Custo Estimado, Taxa de Erro
-- **Gráficos Interativos**: 
+- **Gráficos Interativos**:
   - Consumo de tokens por modelo (gráfico stacked)
   - Latência média por modelo (gráfico de linhas)
   - Taxa de requisições em tempo real (gráfico de área)
