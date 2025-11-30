@@ -135,20 +135,48 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 ## Atualizações Recentes
 
-### Reorganização do Projeto
+### Integração com Modelos Avançados
 
-- O arquivo `dashboard.py` foi atualizado para ser executado de forma independente.
-- A integração do Dash com o Flask foi ajustada para evitar ciclos de importação.
+- Suporte para OpenAI GPT-4 e Hugging Face Transformers para geração de texto.
+- Adicionada integração com Ollama para uso de modelos locais, como Llama-2.
 
-### Testes Automatizados
+### Painel de Monitoramento
 
-- Foram adicionados testes automatizados para validar os endpoints `/` e `/generate`.
-- Os testes podem ser executados com o comando:
-  ```bash
-  pytest tests/test_api.py
-  ```
+- Gráficos em tempo real e análise de logs adicionados ao painel Dash.
 
-### Dependências Adicionais
+### Automação de Implantação
 
-- `flask-cors`: Adicionado para suporte a CORS.
-- `pandas`: Utilizado para manipulação de dados no Dash.
+- Dockerfile atualizado para Python 3.10.
+- Suporte para implantação em contêineres.
+
+### Experiência do Usuário
+
+- Frontend moderno adicionado com React.
+- Documentação interativa com Swagger.
+
+### Segurança
+
+- Implementação de OAuth2 e JWT para autenticação.
+
+### Funcionalidades Adicionais
+
+- Agendamento de tarefas com Celery.
+- Exportação de dados em CSV/JSON.
+
+### Testes Avançados
+
+- Testes de carga adicionados com Locust.
+
+### Integração com Serviços Externos
+
+- Banco de dados migrado para PostgreSQL na nuvem.
+- Integração com AWS Lambda para tarefas específicas.
+
+### Personalização
+
+- Configurações dinâmicas e perfis de usuário adicionados.
+
+### Treinamento e Recomendações
+
+- Suporte para treinamento de modelos personalizados.
+- Sistema de recomendações baseado em contexto.
