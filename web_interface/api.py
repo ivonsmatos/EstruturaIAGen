@@ -4,6 +4,7 @@ from src.llm.base import BaseModel, ModelFactory
 from web_interface.database import Database
 from web_interface.auth import require_api_key
 from web_interface.export import export_to_csv, export_to_json
+from web_interface.cloud_integration import upload_to_s3
 
 app = Flask(__name__)
 
@@ -64,6 +65,18 @@ def export_json():
     file_path = "data/logs.json"
     export_to_json(file_path)
     return jsonify({"message": f"Logs exportados para {file_path}"})
+
+@app.route('/api/upload/s3', methods=['POST'])
+@require_api_key
+def upload_logs_to_s3():
+    data = request.json
+    bucket_name = data.get('bucket_name', 'default-bucket')
+    file_path = "data/logs.json"
+    try:
+        upload_to_s3(file_path, bucket_name)
+        return jsonify({"message": f"Logs enviados para o bucket {bucket_name}."})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
